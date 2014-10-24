@@ -5,6 +5,9 @@ ruby '1.9.3'
 gem 'rails', '4.0.2'
 gem 'pg'
 gem 'bcrypt-ruby'
+gem 'faker'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 
 group :development do
   gem 'rspec-rails', '2.13.1'
