@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+	has_many :microposts, dependent: :destroy
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
 	validates :name,  presence: true, length: { maximum: 50 }
@@ -9,6 +10,10 @@ class User < ActiveRecord::Base
 	before_create :create_remember_token
 	has_secure_password
 
+	def feed
+		Micropost.where("user_id = ?", id)
+	end
+
 	def User.new_remember_token
 		SecureRandom.urlsafe_base64
 	end
@@ -18,7 +23,7 @@ class User < ActiveRecord::Base
 	end
 
 	private
-		def create_remember_token
-			self.remember_token = User.encrypt(User.new_remember_token)
-		end
+	def create_remember_token
+		self.remember_token = User.encrypt(User.new_remember_token)
+	end
 end
